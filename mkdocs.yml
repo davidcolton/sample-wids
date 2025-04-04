@@ -1,13 +1,16 @@
 # Project information
 site_name: Sample Women in Data Science Page
-site_url: https://pages.github.ibm.com/DavidColton/sample_wids/
+site_url: https://davidcolton.github.io/sample-wids/
 site_author: David Colton
-site_description: >-
-  Sample Women in Data Science Page.
+site_description: Sample Women in Data Science Page.
 
 # Repository
 repo_name: DavidColton/sample_wids
-repo_url: https://github.ibm.com/DavidColton/sample_wids
+repo_url: https://github.com/davidcolton/sample-wids
+
+# Source Docs & Site Docs
+docs_dir: "docs"
+site_dir: "site"
 
 # navigation
 nav:
