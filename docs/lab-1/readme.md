@@ -10,13 +10,13 @@ This lab is a [Jupyter notebook](https://jupyter.org/). Please follow the instru
 
 ## Lab
 
-To run the notebook from your command line in Jupyter using the active virtual environment from the [pre-work](../pre-work/README.md#install-jupyter), run:
+To run the notebook from your command line in Jupyter using the active virtual environment from the [pre-work](../pre-work/readme.md), run:
 
 ```shell
 jupyter-lab
 ```
 
-When Jupyter Lab opens the path to the `notebooks/Summarize.ipynb` notebook file is relative to the `sample-wids` folder from the git clone in the [pre-work](../pre-work/README.md#clone-the-granite-workshop-repository). The folder navigation pane on the left-hand side can be used to navigate to the file. Once the notebook has been found it can be double clicked and it will open to the pane on the right. 
+When Jupyter Lab opens the path to the `notebooks/Summarize.ipynb` notebook file is relative to the `sample-wids` folder from the git clone in the [pre-work](../pre-work/readme.md). The folder navigation pane on the left-hand side can be used to navigate to the file. Once the notebook has been found it can be double clicked and it will open to the pane on the right. 
 
 ## Credits
 

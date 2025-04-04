@@ -76,7 +76,7 @@ $ uv sync
 
 ### Serving the Granite AI Models
 
-[Lab 1: Document Summarization with Granite](../lab-1/README.md), [Lab 2: Retrieval Augmented Generation (RAG) with Langchain](../lab-2/README.md) and [Lab 4: Generating Bash Code with Granite Code](../lab-4/README.md) require Granite models to be served by an AI model runtime so that the models can be invoked or called. There are 2 options to serve the models as follows:
+[Lab 1: Document Summarization with Granite](../lab-1/readme.md), [Lab 2: Retrieval Augmented Generation (RAG) with Langchain](../lab-2/readme.md) and [Lab 4: Generating Bash Code with Granite Code](../lab-4/readme.md) require Granite models to be served by an AI model runtime so that the models can be invoked or called. There are 2 options to serve the models as follows:
 
 - [Replicate AI Cloud Platform](#replicate-ai-cloud-platform)
 - [Running Ollama Locally](#running-ollama-locally) OR
@@ -132,7 +132,7 @@ Running Ollama locally on your computer requires the following steps:
     ollama pull granite3.2:8b
     ```
 
-    For [Lab 4: Generating Bash Code with Granite Code](../lab-4/README.md), you will also need at least one of the following Granite Code models.
+    For [Lab 4: Generating Bash Code with Granite Code](../lab-4/readme.md), you will also need at least one of the following Granite Code models.
 
     ```shell
     ollama pull granite-code:3b
