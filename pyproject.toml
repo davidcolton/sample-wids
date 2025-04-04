@@ -7,6 +7,9 @@ requires-python = ">=3.12"
 dependencies = [
     "docling>=2.28.4",
     "ibm-granite-community-utils",
+    "ipywidgets>=8.1.5",
+    "jupyter-black>=0.4.0",
+    "jupyterlab>=4.4.0",
     "langchain-community>=0.3.20",
     "langchain-huggingface>=0.1.2",
     "langchain-ollama>=0.3.0",
