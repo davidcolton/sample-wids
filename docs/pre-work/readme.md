@@ -19,6 +19,7 @@ Running the lab notebooks locally on your computer requires the following steps:
 
 - Git
 - Uv
+- VS Code
 
 
 
@@ -57,8 +58,8 @@ uv 0.6.12 (e4e03833f 2025-04-02)
 Clone the workshop repo and cd into the repo directory.
 
 ```shell
-git clone https://github.com/davidcolton/sample-wids.git
-cd sample-wids
+$ git clone https://github.com/davidcolton/sample-wids.git
+$ cd sample-wids
 ```
 
 
@@ -66,6 +67,10 @@ cd sample-wids
 ### Sync the Python Virtual Environment
 
 The Sample WiDS repository uses a `pyproject.toml` file to define the version of Python to use and the required libraries to load. To sync your repository and setup Python and download your library dependancies run `uv sync` in a terminal.
+
+```shell
+$ uv sync
+```
 
 
 
