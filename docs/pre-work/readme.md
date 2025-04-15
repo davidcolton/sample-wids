@@ -31,7 +31,7 @@ For comprehensive instructions on how to install `git` on your laptop please ref
 To confirm the you have `git` installed correctly you can open a terminal window and type `git version`. You should receive a response like the one shown below.
 
 ```shell
-$ git version
+git version
 git version 2.39.5 (Apple Git-154)
 ```
 
@@ -46,7 +46,7 @@ For detailed instructions on how to install `uv` on your laptop please refer to 
 To confirm the you have `uv` installed correctly you can open a terminal window and type `uv --version`. You should receive a response like the one shown below.
 
 ```shell
-$ uv --version
+uv --version
 uv 0.6.12 (e4e03833f 2025-04-02)
 ```
 
@@ -57,8 +57,8 @@ uv 0.6.12 (e4e03833f 2025-04-02)
 Clone the workshop repo and cd into the repo directory.
 
 ```shell
-$ git clone https://github.com/davidcolton/sample-wids.git
-$ cd sample-wids
+git clone https://github.com/davidcolton/sample-wids.git
+cd sample-wids
 ```
 
 
@@ -67,12 +67,19 @@ $ cd sample-wids
 
 The Sample WiDS repository uses a `pyproject.toml` file to define the version of Python to use and the required libraries to load. To sync your repository and setup Python and download your library dependancies run `uv sync` in a terminal. After syncing you have to activate your virtual environment.
 
+**Note:**
+
+If running on Windows it is suggested that you use the Windows Powershell running as administrator or, if you have it installed, the Windows Subsystem for Linux.
+
 ```shell
-$ uv sync
-$ source .venv/bin/activate
+uv sync
+
+# Mac & Linux
+source .venv/bin/activatez
+
+# Windows Powershell
+.venv\Scripts\activate
 ```
-
-
 
 ### Serving the Granite AI Models
 
@@ -91,7 +98,9 @@ $ source .venv/bin/activate
 
 1. Create a Replicate [API Token](https://replicate.com/account/api-tokens).
 
-1. Set your Replicate API Token as an environment variable in your terminal where you will run the notebook:
+1. When you run the sample Notebooks you will be prompted to enter this token.
+
+1. Alternatively you can set your Replicate API Token as an environment variable in your terminal where you will run the notebook:
 
     ```shell
     export REPLICATE_API_TOKEN=<your_replicate_api_token>
