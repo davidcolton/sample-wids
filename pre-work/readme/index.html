@@ -942,25 +942,32 @@
 <p>Git can be installed on the most common operating systems like Windows,  Mac, and Linux. In fact, Git comes installed by default on most Mac and  Linux machines!</p>
 <p>For comprehensive instructions on how to install <code>git</code> on your laptop please refer to the <a href="https://github.com/git-guides/install-git">Install Git</a> page.</p>
 <p>To confirm the you have <code>git</code> installed correctly you can open a terminal window and type <code>git version</code>. You should receive a response like the one shown below.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>git<span class="w"> </span>version
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>version
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.39.5<span class="w"> </span><span class="o">(</span>Apple<span class="w"> </span>Git-154<span class="o">)</span>
 </span></code></pre></div>
 <h3 id="uv">Uv</h3>
 <p><code>uv</code> is an extremely fast Python package and project manager, written in Rust.</p>
 <p>For detailed instructions on how to install <code>uv</code> on your laptop please refer to the <a href="https://docs.astral.sh/uv/getting-started/installation/#installing-uv">Installing uv</a> page.</p>
 <p>To confirm the you have <code>uv</code> installed correctly you can open a terminal window and type <code>uv --version</code>. You should receive a response like the one shown below.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>uv<span class="w"> </span>--version
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>--version
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>uv<span class="w"> </span><span class="m">0</span>.6.12<span class="w"> </span><span class="o">(</span>e4e03833f<span class="w"> </span><span class="m">2025</span>-04-02<span class="o">)</span>
 </span></code></pre></div>
 <h2 id="clone-the-granite-workshop-repository">Clone the Granite Workshop Repository</h2>
 <p>Clone the workshop repo and cd into the repo directory.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/davidcolton/sample-wids.git
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>sample-wids
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/davidcolton/sample-wids.git
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>sample-wids
 </span></code></pre></div>
 <h3 id="sync-the-python-virtual-environment">Sync the Python Virtual Environment</h3>
 <p>The Sample WiDS repository uses a <code>pyproject.toml</code> file to define the version of Python to use and the required libraries to load. To sync your repository and setup Python and download your library dependancies run <code>uv sync</code> in a terminal. After syncing you have to activate your virtual environment.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>uv<span class="w"> </span>sync
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<p><strong>Note:</strong></p>
+<p>If running on Windows it is suggested that you use the Windows Powershell running as administrator or, if you have it installed, the Windows Subsystem for Linux.</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>sync
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Mac &amp; Linux</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activatez
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># Windows Powershell</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>.venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
 </span></code></pre></div>
 <h3 id="serving-the-granite-ai-models">Serving the Granite AI Models</h3>
 <p><a href="../../lab-1/readme/">Lab 1: Document Summarization with Granite</a>, <a href="../../lab-2/readme/">Lab 2: Retrieval Augmented Generation (RAG) with Langchain</a> and <a href="../../lab-4/readme/">Lab 4: Generating Bash Code with Granite Code</a> require Granite models to be served by an AI model runtime so that the models can be invoked or called. There are 2 options to serve the models as follows:</p>
@@ -981,7 +988,10 @@
 <p>Create a Replicate <a href="https://replicate.com/account/api-tokens">API Token</a>.</p>
 </li>
 <li>
-<p>Set your Replicate API Token as an environment variable in your terminal where you will run the notebook:</p>
+<p>When you run the sample Notebooks you will be prompted to enter this token.</p>
+</li>
+<li>
+<p>Alternatively you can set your Replicate API Token as an environment variable in your terminal where you will run the notebook:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">REPLICATE_API_TOKEN</span><span class="o">=</span>&lt;your_replicate_api_token&gt;
 </span></code></pre></div>
 </li>
