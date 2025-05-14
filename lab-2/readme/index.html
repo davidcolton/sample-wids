@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#retrieval-augmented-generation-rag-with-langchain" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -495,6 +500,21 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Lab 2. Retrieval Augmented Generation (RAG) with Langchain
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -507,6 +527,79 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loading-the-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading the Lab
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-and-lab-with-explanations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running and Lab (with explanations)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-the-embeddings-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing the Embeddings Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vector Database
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selecting-your-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selecting your model
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -654,6 +747,70 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loading-the-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading the Lab
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-and-lab-with-explanations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running and Lab (with explanations)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-the-embeddings-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing the Embeddings Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vector Database
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selecting-your-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selecting your model
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -672,9 +829,207 @@
   
 
 
-  <h1>Lab 2. Retrieval Augmented Generation (RAG) with Langchain</h1>
-
-
+<h1 id="retrieval-augmented-generation-rag-with-langchain">Retrieval Augmented Generation (RAG) with Langchain</h1>
+<p><a href="https://research.ibm.com/blog/retrieval-augmented-generation-RAG">Retrieval Augumented Generation (RAG)</a> is an architectural pattern that can be used to augment the performance of language models by recalling factual information from a knowledge base, and adding that information to the model query.</p>
+<p>The goal of this lab is to show how you can use RAG with an <a href="https://www.ibm.com/granite">IBM Granite</a> model to augment the model query answer using a publicly available document. The most common approach in RAG is to create dense vector representations of the knowledge base in order to retrieve text chunks that are semantically similar to a given user query.</p>
+<p>RAG use cases include:
+- Customer service: Answering questions about a product or service using facts from the product documentation.
+- Domain knowledge: Exploring a specialized domain (e.g., finance) using facts from papers or articles in the knowledge base.
+- News chat: Chatting about current events by calling up relevant recent news articles.</p>
+<p>In its simplest form, RAG requires 3 steps:</p>
+<ul>
+<li>Initial setup:</li>
+<li>Index knowledge-base passages for efficient retrieval. In this recipe, we take embeddings of the passages and store them in a vector database.</li>
+<li>Upon each user query:</li>
+<li>Retrieve relevant passages from the database. In this recipe, we use an embedding of the query to retrieve semantically similar passages.</li>
+<li>Generate a response by feeding retrieved passage into a large language model, along with the user query.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This lab is a <a href="https://jupyter.org/">Jupyter notebook</a>. Please follow the instructions in <a href="../../pre-work/readme/">pre-work</a> to run the lab.</p>
+<h2 id="loading-the-lab">Loading the Lab</h2>
+<p>To run the notebook from your command line in Jupyter using the active virtual environment from the <a href="../../pre-work/readme/">pre-work</a>, run:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>jupyter-lab
+</span></code></pre></div>
+<p>When Jupyter Lab opens the path to the <code>notebooks/RAG_with_Langchain.ipynb</code> notebook file is relative to the <code>sample-wids</code> folder from the git clone in the <a href="../../pre-work/readme/">pre-work</a>. The folder navigation pane on the left-hand side can be used to navigate to the file. Once the notebook has been found it can be double clicked and it will open to the pane on the right. </p>
+<h2 id="running-and-lab-with-explanations">Running and Lab (with explanations)</h2>
+<p>This notebook demonstrates an application of long document summarisation techniques to a work of literature using Granite.</p>
+<p>The notebook contains both <code>code</code> cells and <code>markdown</code> text cells. The text cells each give a brief overview of the code in the following code cell(s). These cells are not executable. You can execute the code cells by placing your cursor in the cell and then either hitting the <strong>Run this cell</strong> button at the top of the page or by pressing the <code>Shift</code> + <code>Enter</code> keys together. The main <code>code</code> cells are described in detail below.</p>
+<h2 id="choosing-the-embeddings-model">Choosing the Embeddings Model</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_huggingface</span><span class="w"> </span><span class="kn">import</span> <span class="n">HuggingFaceEmbeddings</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">embeddings_model_path</span> <span class="o">=</span> <span class="s2">&quot;ibm-granite/granite-embedding-30m-english&quot;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">embeddings_model</span> <span class="o">=</span> <span class="n">HuggingFaceEmbeddings</span><span class="p">(</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">model_name</span><span class="o">=</span><span class="n">embeddings_model_path</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">)</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">embeddings_tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">embeddings_model_path</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Here we are using the Hugging Face Transformers library to load a pre-trained model for generating embeddings (vector representations of text). Here's a breakdown of what each line does:</p>
+<ol>
+<li><code>from langchain_huggingface import HuggingFaceEmbeddings</code>: This line imports the <code>HuggingFaceEmbeddings</code> class from the </li>
+</ol>
+<p><code>langchain_huggingface</code> module. This class is used to load pre-trained models for generating embeddings.</p>
+<ol>
+<li>
+<p><code>from transformers import AutoTokenizer</code>: This line imports the <code>AutoTokenizer</code> class from the <code>transformers</code> library. This class is used to tokenize text into smaller pieces (words, subwords, etc.) that can be processed by the model.</p>
+</li>
+<li>
+<p><code>embeddings_model_path = "ibm-granite/granite-embedding-30m-english"</code> : This line sets a variable <code>embeddings_model_path</code> to the path of the pre-trained model. In this case, it's a model called "granite-embedding-30m-english" developed by IBM's Granite project.</p>
+</li>
+<li>
+<p><code>embeddings_model = HuggingFaceEmbeddings(model_name=embeddings_model_path)</code>: This line creates an instance of the <code>HuggingFaceEmbeddings</code> class, loading the pre-trained model specified by <code>embeddings_model_path</code>.</p>
+</li>
+<li>
+<p><code>embeddings_tokenizer = AutoTokenizer.from_pretrained(embeddings_model_path)</code>: This line creates an instance of the <code>AutoTokenizer</code> class, loading the tokenizer that was trained alongside the specified model. This tokenizer will be used to convert text into a format that the model can process.</p>
+</li>
+</ol>
+<p>In summary, we are setting up a system for generating embeddings from text using a pre-trained model and its associated tokenizer. The embeddings can then be used for various natural language processing tasks, such as text classification, clustering, or similarity comparison.</p>
+<p>To use a model from a provider other than Huggingface, replace this code cell with one from <a href="https://github.com/ibm-granite-community/granite-kitchen/blob/main/recipes/Components/Langchain_Embeddings_Models.ipynb">this Embeddings Model recipe</a>.</p>
+<h2 id="vector-database">Vector Database</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_milvus</span><span class="w"> </span><span class="kn">import</span> <span class="n">Milvus</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">db_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;milvus_&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.db&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The vector database will be saved to </span><span class="si">{</span><span class="n">db_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">vector_db</span> <span class="o">=</span> <span class="n">Milvus</span><span class="p">(</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">embedding_function</span><span class="o">=</span><span class="n">embeddings_model</span><span class="p">,</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">connection_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="n">db_file</span><span class="p">},</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">auto_id</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">index_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;index_type&quot;</span><span class="p">:</span> <span class="s2">&quot;AUTOINDEX&quot;</span><span class="p">},</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>This Python script is setting up a vector database using Milvus, a vector database built for AI applications, and Hugging Face's Transformers library for embeddings. It uses the previously created Embeddings Model. Here's a breakdown of what the code does:</p>
+<ol>
+<li>It imports <code>tempfile</code> and <code>Milvus</code> from <code>langchain_milvus</code>.</li>
+<li>It creates a temporary file for the Milvus database using <code>tempfile.NamedTemporaryFile()</code>. This file will store the vector database.</li>
+<li>It initializes an instance of <code>Milvus</code>with the embedding function set to the previously created <code>embeddings_model</code>. The connection arguments specify the URI of the database file, which is the temporary file created in the previous step. The <code>auto_id</code> parameter is set to True, which means Milvus will automatically generate IDs for the vectors. The <code>index_params</code> parameter sets the index type to "AUTOINDEX", which allows Milvus to automatically choose the most suitable index for the data.</li>
+</ol>
+<p>In summary, this script sets up a vector database using Milvus and a pre-trained embedding model from Hugging Face. The database is stored in a temporary file, and it's ready to index and search vector representations of text data.</p>
+<h2 id="selecting-your-model">Selecting your model</h2>
+<p>Select a Granite model to use. Here we use a Langchain client to connect to  the model. If there is a locally accessible Ollama server, we use an  Ollama client to access the model. Otherwise, we use a Replicate client  to access the model.</p>
+<p>When using Replicate, if the <code>REPLICATE_API_TOKEN</code> environment variable is not set, or a <code>REPLICATE_API_TOKEN</code> Colab secret is not set, then the notebook will ask for your <a href="https://replicate.com/account/api-tokens">Replicate API token</a> in a dialog box.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">try</span><span class="p">:</span>  <span class="c1"># Look for a locally accessible Ollama server for the model</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OLLAMA_HOST&quot;</span><span class="p">,</span> <span class="s2">&quot;http://127.0.0.1:11434&quot;</span><span class="p">))</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">OllamaLLM</span><span class="p">(</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;granite3.2:2b&quot;</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="n">num_ctx</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span>  <span class="c1"># 64K context window</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="p">)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Client side controls prompt</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># Use Replicate for the model</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Replicate</span><span class="p">(</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;ibm-granite/granite-3.2-8b-instruct&quot;</span><span class="p">,</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="n">replicate_api_token</span><span class="o">=</span><span class="n">get_env_var</span><span class="p">(</span><span class="s2">&quot;REPLICATE_API_TOKEN&quot;</span><span class="p">),</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        <span class="n">model_kwargs</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>            <span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>  <span class="c1"># Set the maximum number of tokens to generate as output.</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>            <span class="s2">&quot;min_tokens&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>  <span class="c1"># Set the minimum number of tokens to generate as output.</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>            <span class="s2">&quot;presence_penalty&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>            <span class="s2">&quot;frequency_penalty&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>        <span class="p">},</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    <span class="p">)</span>
+</span></code></pre></div>
+<p>In this first piece of code we <strong>try</strong> to determine if there is a local Ollama server running on <code>http://127.0.0.1:11434</code>. If the Ollama server is found then an <code>OllamaLLM</code> model instance is created for use later. If the Ollama server is not found the code then reverts to using the Granite 3.2-8b model served from Replicate .</p>
+<h1 id="split-the-document-into-chunks">Split the document into chunks</h1>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.document_loaders</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextLoader</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.text_splitter</span><span class="w"> </span><span class="kn">import</span> <span class="n">CharacterTextSplitter</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">loader</span> <span class="o">=</span> <span class="n">TextLoader</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">documents</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">text_splitter</span> <span class="o">=</span> <span class="n">CharacterTextSplitter</span><span class="o">.</span><span class="n">from_huggingface_tokenizer</span><span class="p">(</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">tokenizer</span><span class="o">=</span><span class="n">embeddings_tokenizer</span><span class="p">,</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">chunk_size</span><span class="o">=</span><span class="n">embeddings_tokenizer</span><span class="o">.</span><span class="n">max_len_single_sentence</span><span class="p">,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="p">)</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">texts</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">for</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">texts</span><span class="p">):</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="n">text</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;doc_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc_id</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span><span class="si">}</span><span class="s2"> text document chunks created&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>This Python script is using the Langchain library to load a text file and split it into smaller chunks. Here's a breakdown of what each part does:</p>
+<ol>
+<li><code>from langchain.document_loaders import TextLoader</code>: This line imports the TextLoader class from the langchain.document_loaders module. TextLoader is used to load documents from a file.</li>
+<li><code>from langchain.text_splitter import CharacterTextSplitter</code> : This line imports the CharacterTextSplitter class from the <code>langchain.text_splitter</code> module. <code>CharacterTextSplitter</code> is used to split text into smaller chunks.</li>
+<li><code>loader = TextLoader(filename)</code> : This line creates an instance of <code>TextLoader</code>, which is used to load the text from the specified file <code>(filename)</code>.</li>
+<li><code>documents = loader.load()</code> : This line loads the text from the file and stores it in the <code>documents</code> variable as a list of strings.</li>
+<li><code>text_splitter = CharacterTextSplitter.from_huggingface_tokenizer(...)</code> : This line creates an instance of <code>CharacterTextSplitter</code>. It takes a Hugging Face tokenizer <code>(embeddings_tokenizer)</code>, sets the chunk size to the maximum length of a single sentence that the tokenizer can handle, and sets the chunk overlap to 0 (meaning no overlap between chunks).</li>
+<li><code>texts = text_splitter.split_documents(documents)</code>: This line splits the documents into smaller chunks using the <code>CharacterTextSplitter</code> instance. The result is stored in the texts variable as a list of lists, where each inner list contains the chunks of a single document.</li>
+<li><code>for doc_id, text in enumerate(texts): text.metadata["doc_id"] = doc_id</code>: This loop assigns a unique identifier (doc_id) to each chunk of text. The doc_id is the index of the chunk in the texts list.</li>
+<li><code>print(f"{len(texts)} text document chunks created")</code>: This line prints the total number of text chunks created.</li>
+</ol>
+<p>In summary, this script loads a text file, splits it into smaller chunks based on the maximum sentence length that a Hugging Face tokenizer can handle, assigns a unique identifier to each chunk, and then prints the total number of chunks created.</p>
+<h2 id="populate-the-vector-database">Populate the vector database</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">ids</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents added to the vector database&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Next we load the <code>texts</code> object created earlier, split it into sentence-sized chunks, and adds these chunks to our vector database, associating each chunk with a unique ID.</p>
+<ol>
+<li><code>ids = vector_db.add_documents(texts)</code>: This line adds the text chunks to a vector database (</li>
+</ol>
+<p><code>vector_db</code>). The <code>add_documents</code> method returns a list of IDs for the added documents.</p>
+<ol>
+<li><code>print(f"{len(ids)} documents added to the vector database")</code>: This line prints the number of documents added to the vector database.</li>
+</ol>
+<h2 id="querying-the-vector-database">Querying the Vector Database</h2>
+<h2 id="conduct-a-similarity-search">Conduct a similarity search</h2>
+<p>Search the database for similar documents by proximity of the embedded vector in vector space.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What did the president say about Ketanji Brown Jackson?&quot;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">docs</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents returned&quot;</span><span class="p">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">:</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="answering-questions">Answering Questions</h2>
+<p>Build a RAG chain with the model and the document retriever.</p>
+<p>First we create the prompts for Granite to perform the RAG query. We use the Granite chat template and supply the placeholder values that the LangChain RAG pipeline will replace.</p>
+<p><code>{context}</code> will hold the retrieved chunks, as shown in the previous search, and feeds this to the model as document context for answering our question.</p>
+<p>Next, we construct the RAG pipeline by using the Granite prompt templates previously created.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains.retrieval</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_retrieval_chain</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains.combine_documents</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_stuff_documents_chain</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Create a Granite prompt for question-answering with the retrieved context</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">prompt</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">apply_chat_template</span><span class="p">(</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="n">conversation</span><span class="o">=</span><span class="p">[{</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{input}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="p">}],</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="n">documents</span><span class="o">=</span><span class="p">[{</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;placeholder&quot;</span><span class="p">,</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{context}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    <span class="p">}],</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    <span class="n">add_generation_prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    <span class="n">tokenize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="p">)</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="n">prompt_template</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="c1"># Create a Granite document prompt template to wrap each retrieved document</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="n">document_prompt_template</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="s2">Document </span><span class="si">{doc_id}</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="si">{page_content}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="n">document_separator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="c1"># Assemble the retrieval-augmented generation chain</span>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="n">combine_docs_chain</span> <span class="o">=</span> <span class="n">create_stuff_documents_chain</span><span class="p">(</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>    <span class="n">llm</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>    <span class="n">prompt</span><span class="o">=</span><span class="n">prompt_template</span><span class="p">,</span>
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>    <span class="n">document_prompt</span><span class="o">=</span><span class="n">document_prompt_template</span><span class="p">,</span>
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>    <span class="n">document_separator</span><span class="o">=</span><span class="n">document_separator</span><span class="p">,</span>
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="p">)</span>
+</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="n">rag_chain</span> <span class="o">=</span> <span class="n">create_retrieval_chain</span><span class="p">(</span>
+</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>    <span class="n">retriever</span><span class="o">=</span><span class="n">vector_db</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">(),</span>
+</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>    <span class="n">combine_docs_chain</span><span class="o">=</span><span class="n">combine_docs_chain</span><span class="p">,</span>
+</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="generate-a-retrieval-augmented-response-to-a-question">Generate a retrieval-augmented response to a question</h2>
+<p>Use the RAG chain to process a question. The document chunks relevant to that question are retrieved and used as context.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">output</span> <span class="o">=</span> <span class="n">rag_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">})</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s1">&#39;answer&#39;</span><span class="p">])</span>
+</span></code></pre></div>
+<h2 id="credits">Credits</h2>
+<p>This notebook is a modified version of the IBM Granite Community <a href="https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/RAG/RAG_with_Langchain.ipynb">Retrieval Augmented Generation (RAG) with Langchain</a> notebook. Refer to the <a href="https://github.com/ibm-granite-community">IBM Granite Community</a> for the official notebooks.</p>
 
 
 
