@@ -228,6 +228,87 @@ This Python code is fetching and processing a webpage from the Project Gutenberg
 
 In summary, this code is fetching a webpage, dividing its content into chunks based on the defined conditions, extracting headings from each chunk, merging all chunks back into a single list, and storing the result as a list of dictionaries. Each dictionary in the list represents a document with its content and metadata.
 
+
+
+### Summarise Chunks
+
+Here we define a method to generate a response using a list of documents and a user prompt about those documents. We create the prompt according to the [Granite Prompting Guide](https://www.ibm.com/granite/docs/models/granite/#chat-template) and provide the documents using the `documents` parameter.
+
+```python
+def generate(user_prompt: str, documents: list[dict[str, str]]):
+    """Use the chat template to format the prompt"""
+    prompt = tokenizer.apply_chat_template(
+        conversation=[
+            {
+                "role": "user",
+                "content": user_prompt,
+            }
+        ],
+        documents=documents,  # This uses the documents support in the Granite chat template
+        add_generation_prompt=True,
+        tokenize=False,
+    )
+
+    print(f"Input size: {len(tokenizer.tokenize(prompt))} tokens")
+    output = model.invoke(prompt)
+    print(f"Output size: {len(tokenizer.tokenize(output))} tokens")
+
+    return output
+```
+
+This Python function, named `generate` , is designed to interact with a language model, such as a chatbot or in our case our Granite Model, using a provided user prompt and a list of documents. Here's a breakdown of what the function does:
+
+1. The function takes two arguments:
+   - `user_prompt`: a string representing the user's input or question.
+   - `documents`: a list of dictionaries, where each dictionary contains key-value pairs representing the documents to be used as context for the language model.
+2. The function uses a tokenizer to apply a chat template to the user prompt and the provided documents. The chat template is a predefined format that structures the input for the language model. The `apply_chat_template` method formats the input as a conversation with a single "user" role and the user's prompt as the content. The `documents` argument is passed to the template to provide additional context for the model.
+3. The `add_generation_prompt` parameter is set to `True` , which means that a special generation prompt will be added to the input. This prompt guides the model to generate a response rather than just selecting an answer from a predefined set.
+4. The `tokenize` parameter is set to `False`, which means that the input and output will not be tokenized (i.e., broken down into individual words or subwords) before being passed to the model.
+5. The function then prints the size of the input in terms of the number of tokens (words or subwords) after tokenization.
+6. The `model.invoke(prompt)` line calls the language model with the formatted prompt and retrieves the generated output.
+7. The function prints the size of the output in terms of the number of tokens.
+8. Finally, the function returns the generated output from the language model.
+
+In summary, this function formats a user prompt and contextual documents using a chat template, invokes a language model with the formatted input, and returns the generated output. The token sizes are printed for debugging purposes.
+
+
+
+```python
+user_prompt = """\
+Using only the the book chapter document, compose a summary of the book chapter.
+Your response should only include the summary. Do not provide any further explanation."""
+
+summaries: list[dict[str, str]] = []
+
+for document in documents:
+    print(
+        f"============================= {document['title']} ============================="
+    )
+    output = generate(user_prompt, [document])
+    summaries.append({"title": document["title"], "text": output})
+
+print("Summary count: " + str(len(summaries)))
+```
+
+We then define the prompt we wist to use and invoke this `generate` function for each chapter creating a separate summary for each and populating a list of dictionaries with the chapter title and the summary from the model.
+
+
+
+### Final Summary
+
+```python
+user_prompt = """\
+Using only the book chapter summary documents, compose a single, unified summary of the book.
+Your response should only include the unified summary. Do not provide any further explanation."""
+
+output = generate(user_prompt, summaries)
+print(output)
+```
+
+To conclude we then call the `generate` function again but this time, instead of passing the full text of each chapter, we pass the list of dictionaries containing the chapter summaries and ask the model to provide an overall summary of the book by summarising the summaries of each chapter. So we have now summarized a document larger than the AI model's context window length by breaking the document down into smaller pieces to summarize and then summarizing those summaries.
+
+
+
 ## Credits
 
 This notebook is a modified version of the IBM Granite Community [Document Summarization](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Summarize/Summarize.ipynb) notebook. Refer to the [IBM Granite Community](https://github.com/ibm-granite-community) for the official notebooks.
